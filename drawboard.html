@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="drawboard.css">
+</head>
+<body>
+<div class="canvas-area">
+    <canvas id="canvas" class="canvas" style="background-color: beige;">
+        该浏览器不支持canvas
+    </canvas>
+    <canvas id="offCanvas" style="position:absolute;top:0;left: 0;background-color: rgba(255,255,255,0)"></canvas>
+    <div class="tools">
+        <div class="tools-title">工具</div>
+        <div class="tools-bar">
+            <ul id="toolsBar">
+                <li data-type="line">直线</li>
+                <li data-type="rect">矩形</li>
+                <li class="active" data-type="cycle"> 圆形</li>
+                <li data-type="triangle-top"> 上三角</li>
+                <li data-type="triangle-bottom"> 下三角</li>
+                <li data-type="triangle-left"> 左三角</li>
+                <li data-type="triangle-right"> 右三角</li>
+                <li data-type="drawpen">画笔</li>
+                <li data-type="draw-word">文字</li>
+                <li data-type="rubber">橡皮</li>
+                <li data-type="clear-canvas">清除</li>
+            </ul>
+        </div>
+    </div>
+    <div class="attribute-area">
+        <div class="word-textarea">
+            <textarea id="wordText"  rows="5"></textarea>
+            <a id="wordSave" href="javascript:;">确定</a>
+            <a id="clearWord" href="javascript:;">清除</a>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="drawboard.js"></script>
+</body>
+</html>

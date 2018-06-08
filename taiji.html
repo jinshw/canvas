@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas" style="background-color: beige;border:1px solid #000;"></canvas>
+<script>
+    canvasWidth = 800
+    canvasHeight = 600
+    var canvas = document.getElementById("canvas")
+    var context = canvas.getContext("2d")
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+
+    context.shadowBlur = 0;
+    context.shadowColor = "#fff";
+    context.shadowOffsetX = 0;
+    context.shadowOffsetY = 0;//先设置阴影再画矩形
+
+    context.save()
+    context.moveTo(0, 0)
+    context.lineTo(200, 100)
+    context.stroke()
+    context.restore()
+
+    context.save()
+    context.beginPath()
+    context.strokeStyle = "red"
+    context.arc(200, 100, 50, 0, Math.PI * 2)
+    context.stroke()
+    context.closePath()
+    context.restore()
+
+    context.save()
+    context.beginPath()
+    context.shadowBlur = 20;
+    context.shadowColor = "#456";
+    context.shadowOffsetX = -10;
+    context.shadowOffsetY = 30;//先设置阴影再画矩形
+    context.fillStyle = "#108997"
+    context.fillRect(250, 100, 100, 80)
+    context.stroke()
+    context.closePath()
+    context.restore()
+
+
+    // 太极
+    //    drawTaiji()
+    var x = 400
+    var y = 300
+    var r = 10
+    temp = 2 * Math.PI / 360
+    var angle = 0
+    var isAdd = true
+    setInterval(function () {
+        context.clearRect(0,0,canvas.width,canvas.height)
+        drawTaiji(angle)
+        angle = angle + 11
+        if(isAdd){
+            r = r + 10
+        }else{
+            r = r - 10
+        }
+
+
+        console.log(angle)
+        if (angle >= 360) {
+            angle = 0
+        }
+        if (r >= 400) {
+//            r = 10
+            isAdd = false
+        }else if(r<30){
+            isAdd = true
+        }
+    }, 120)
+    //    drawTaiji(277)
+    function drawTaiji(angle) {
+//        var x = 400
+//        var y = 300
+//        var r = 150
+
+//        var x1 = x
+//        var y1 = y -r/2
+//        var r1 = r/2
+
+        var x1 = x
+        var y1 = y - r / 2
+        var _rotateXY1 = getRotateXY("1", angle, x, y, r) // 1:x1,y1
+        if (_rotateXY1) {
+            x1 = _rotateXY1.x
+            y1 = _rotateXY1.y
+        }
+        var r1 = r / 2
+
+//        var x2 = x
+//        var y2 = y +r/2
+//        var r2 = r/2
+
+        var x2 = x
+        var y2 = y + r / 2
+        var _rotateXY2 = getRotateXY("2", angle, x, y, r) // 2:x2,y2
+        if (_rotateXY2) {
+            x2 = _rotateXY2.x
+            y2 = _rotateXY2.y
+        }
+        var r2 = r / 2
+
+        var xx1 = x1
+        var yy1 = y1
+        var rr1 = r / 8
+//        var xx1 = x1
+//        var yy1 = y - r / 2
+//        var rr1 = r / 8
+
+        var xx2 = x2
+        var yy2 = y2
+        var rr2 = r / 8
+//        var xx2 = x2
+//        var yy2 = y + r / 2
+//        var rr2 = r / 8
+
+
+        context.clearRect(x, y, r, r)
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#000"
+        context.strokeStyle = "#00"
+        context.arc(x, y, r, -Math.PI * 0.5 + getAnimAngle(angle), Math.PI * 0.5 + getAnimAngle(angle))
+        context.fill()
+        context.closePath()
+        context.stroke()
+        context.restore()
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#fff"
+        context.strokeStyle = "#fff"
+        context.arc(x, y, r, -Math.PI * 0.5 + getAnimAngle(angle), Math.PI * 0.5 + getAnimAngle(angle), true)
+        context.fill()
+        context.closePath()
+        context.stroke()
+        context.restore()
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#fff"
+        context.strokeStyle = "#fff"
+        context.lineWidth = 0
+        context.arc(x1, y1, r1, -Math.PI * 0.5 + getAnimAngle(angle), Math.PI * 0.5 + getAnimAngle(angle + 90))
+        context.fill()
+        context.closePath()
+//        context.stroke()
+        context.restore()
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#000"
+        context.strokeStyle = "#000"
+        context.lineWidth = 0
+        context.arc(x2, y2, r2, -Math.PI * 0.5 + getAnimAngle(angle + 90), Math.PI * 0.5 + getAnimAngle(angle), true)
+        context.fill()
+        context.closePath()
+//        context.stroke()
+        context.restore()
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#000"
+        context.arc(xx1, yy1, rr1, 0, Math.PI * 2)
+        context.fill()
+        context.closePath()
+        context.restore()
+
+        context.save()
+        context.beginPath()
+        context.fillStyle = "#fff"
+        context.arc(xx2, yy2, rr2, 0, Math.PI * 2)
+        context.fill()
+        context.closePath()
+        context.restore()
+    }
+
+    function getRotateXY(type, angle, x, y, r) {
+        if (type == "1") {
+            return getRotateXY1(angle, x, y, r)
+        } else if (type == "2") {
+            return getRotateXY2(angle, x, y, r)
+        }
+    }
+
+    function getRotateXY2(angle, x, y, r) {
+        rt = r / 2
+//        temp = 2 * Math.PI / 360
+        if (angle > 0 && angle < 90) {
+            angleTemp = angle
+            xt = Math.sin(angleTemp * temp) * rt
+            yt = Math.cos(angleTemp * temp) * rt
+            return {x: x - xt, y: y + yt}
+        } else if (angle > 90 && angle < 180) {
+            angleTemp = angle - 90
+            xt = Math.cos(angleTemp * temp) * rt
+            yt = Math.sin(angleTemp * temp) * rt
+            return {x: x - xt, y: y - yt}
+        } else if (angle > 180 && angle < 270) {
+            angleTemp = angle - 180
+            xt = Math.sin(angleTemp * temp) * rt
+            yt = Math.cos(angleTemp * temp) * rt
+            return {x: x + xt, y: y - yt}
+        } else if (angle > 270 && angle < 360) {
+            angleTemp = angle - 270
+            xt = Math.cos(angleTemp * temp) * rt
+            yt = Math.sin(angleTemp * temp) * rt
+            return {x: x + xt, y: y + yt}
+        } else {
+            return null
+        }
+
+    }
+
+    function getRotateXY1(angle, x, y, r) {
+        rt = r / 2
+//        temp = 2 * Math.PI / 360
+        if (angle > 0 && angle < 90) {
+            angleTemp = angle
+            xt = Math.sin(angleTemp * temp) * rt
+            yt = Math.cos(angleTemp * temp) * rt
+            return {x: x + xt, y: y - yt}
+        } else if (angle > 90 && angle < 180) {
+            angleTemp = angle - 90
+            xt = Math.cos(angleTemp * temp) * rt
+            yt = Math.sin(angleTemp * temp) * rt
+            return {x: x + xt, y: y + yt}
+        } else if (angle > 180 && angle < 270) {
+            angleTemp = angle - 180
+            xt = Math.sin(angleTemp * temp) * rt
+            yt = Math.cos(angleTemp * temp) * rt
+            return {x: x - xt, y: y + yt}
+        } else if (angle > 270 && angle < 360) {
+            angleTemp = angle - 270
+            xt = Math.cos(angleTemp * temp) * rt
+            yt = Math.sin(angleTemp * temp) * rt
+            return {x: x - xt, y: y - yt}
+        } else {
+            return null
+        }
+
+    }
+    function getAnimAngle(angle) {
+        return temp * angle
+        /* if (angle > 0 && angle < 90) {
+         return temp * angle
+         } else if (angle > 90 && angle < 180) {
+         return temp * (angle - 90)
+         } else if (angle > 180 && angle < 270) {
+         return temp * (angle - 180)
+         } else if (angle > 270 && angle < 360) {
+         return temp * (angle - 270)
+         }*/
+    }
+</script>
+</body>
+</html>
