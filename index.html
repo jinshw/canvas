@@ -1,164 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
     <canvas id="canvas" style="background-color: beige;border:1px solid #000;"></canvas>
-<script>
-    canvasWidth = 800
-    canvasHeight = 600
-    var canvas = document.getElementById("canvas")
-    var context = canvas.getContext("2d")
-    canvas.width = canvasWidth
-    canvas.height = canvasHeight
+    <script>
+        canvasWidth = 800
+        canvasHeight = 600
+        var canvas = document.getElementById("canvas")
+        var context = canvas.getContext("2d")
+        canvas.width = canvasWidth
+        canvas.height = canvasHeight
 
-    context.shadowBlur=0;
-    context.shadowColor="#fff";
-    context.shadowOffsetX=0;
-    context.shadowOffsetY=0;//先设置阴影再画矩形
+        context.shadowBlur = 0;
+        context.shadowColor = "#fff";
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0; //先设置阴影再画矩形
 
-    context.save()
-    context.moveTo(0,0)
-    context.lineTo(200,100)
-    context.stroke()
-    context.restore()
-
-    context.save()
-    context.beginPath()
-    context.strokeStyle = "red"
-    context.arc(200,100,50,0,Math.PI*2)
-    context.stroke()
-    context.closePath()
-    context.restore()
-
-    context.save()
-    context.beginPath()
-    context.shadowBlur=20;
-    context.shadowColor="#456";
-    context.shadowOffsetX=-10;
-    context.shadowOffsetY=30;//先设置阴影再画矩形
-    context.fillStyle = "#108997"
-    context.fillRect(250,100,100,80)
-    context.stroke()
-    context.closePath()
-    context.restore()
-
-
-    // 太极
-    drawTaiji()
-
-
-    function drawTaiji() {
-
-
-        var x = 400
-        var y = 300
-        var r = 100
-
-        var x1 = x
-        var y1 = y -r/2
-        var r1 = r/2
-
-        var x2 = x
-        var y2 = y +r/2
-        var r2 = r/2
-
-        var xx1 = x
-        var yy1 = y -r/2
-        var rr1 = r/8
-
-        var xx2 = x
-        var yy2 = y +r/2
-        var rr2 = r/8
+        context.save()
+        context.moveTo(0, 0)
+        context.lineTo(200, 100)
+        context.stroke()
+        context.restore()
 
         context.save()
         context.beginPath()
-        context.fillStyle = "#000"
-        context.strokeStyle="#000"
-        context.arc(x,y,r,-Math.PI*0.5,Math.PI*0.5)
-        context.fill()
+        context.strokeStyle = "red"
+        context.arc(200, 100, 50, 0, Math.PI * 2)
         context.stroke()
         context.closePath()
         context.restore()
 
         context.save()
         context.beginPath()
-        context.fillStyle = "#fff"
-        context.strokeStyle="#000"
-        context.arc(x,y,r,-Math.PI*0.5,Math.PI*0.5,true)
-        context.fill()
+        context.shadowBlur = 20;
+        context.shadowColor = "#456";
+        context.shadowOffsetX = -10;
+        context.shadowOffsetY = 30; //先设置阴影再画矩形
+        context.fillStyle = "#108997"
+        context.fillRect(250, 100, 100, 80)
         context.stroke()
         context.closePath()
         context.restore()
 
-        context.save()
-        context.beginPath()
-        context.fillStyle = "#fff"
-        context.arc(x1,y1,r1,-Math.PI*0.5,Math.PI*0.5)
-        context.fill()
+
+        // 太极
+        drawTaiji()
+
+
+        function drawTaiji() {
+
+
+            var x = 400
+            var y = 300
+            var r = 100
+
+            var x1 = x
+            var y1 = y - r / 2
+            var r1 = r / 2
+
+            var x2 = x
+            var y2 = y + r / 2
+            var r2 = r / 2
+
+            var xx1 = x
+            var yy1 = y - r / 2
+            var rr1 = r / 8
+
+            var xx2 = x
+            var yy2 = y + r / 2
+            var rr2 = r / 8
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#000"
+            context.strokeStyle = "#000"
+            context.arc(x, y, r, -Math.PI * 0.5, Math.PI * 0.5)
+            context.fill()
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#fff"
+            context.strokeStyle = "#000"
+            context.arc(x, y, r, -Math.PI * 0.5, Math.PI * 0.5, true)
+            context.fill()
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#fff"
+            context.arc(x1, y1, r1, -Math.PI * 0.5, Math.PI * 0.5)
+            context.fill()
+            context.stroke()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#000"
+            context.arc(x2, y2, r2, -Math.PI * 0.5, Math.PI * 0.5, true)
+            context.fill()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#000"
+            context.arc(xx1, yy1, rr1, 0, Math.PI * 2)
+            context.fill()
+            context.closePath()
+            context.restore()
+
+            context.save()
+            context.beginPath()
+            context.fillStyle = "#fff"
+            context.arc(xx2, yy2, rr2, 0, Math.PI * 2)
+            context.fill()
+            context.closePath()
+            context.restore()
+        }
+
+
+        // 三角形
+        //填充三角形（等边）
+        context.beginPath();
+        var height = 200 * Math.sin(Math.PI / 3); //计算等边三角形的高
+        context.moveTo(100, 0); //从A（100,0）开始
+        context.lineTo(0, height); //从A(100,0)开始，画到B (0,173)结束
+        context.lineTo(200, height); //B(0,173)-C(200,173)
+        //ctx.fillStyle='#00ff00';//以纯色绿色填充
+        var grd = context.createLinearGradient(0, 0, 200, 0); //使用渐变颜色填充,从(0,0)到(200,0) （左到右）
+        grd.addColorStop(0, "#4CE8B2"); //起始颜色
+        grd.addColorStop(1, "#EFD458"); //终点颜色
+        //    context.fillStyle=grd; //以上面定义的渐变填充
+        //    context.fill(); //闭合形状并且以填充方式绘制出来
+        context.lineTo(100, 0)
         context.stroke()
-        context.closePath()
-        context.restore()
 
-        context.save()
-        context.beginPath()
-        context.fillStyle = "#000"
-        context.arc(x2,y2,r2,-Math.PI*0.5,Math.PI*0.5,true)
-        context.fill()
-        context.closePath()
-        context.restore()
+        // 绘制文字
+        context.fillStyle = "red"
 
-        context.save()
-        context.beginPath()
-        context.fillStyle = "#000"
-        context.arc(xx1,yy1,rr1,0,Math.PI*2)
-        context.fill()
-        context.closePath()
-        context.restore()
+        context.font = "normal normal lighter 60px '微软雅黑'"
+        context.textAlign = "left"
 
-        context.save()
-        context.beginPath()
-        context.fillStyle = "#fff"
-        context.arc(xx2,yy2,rr2,0,Math.PI*2)
-        context.fill()
-        context.closePath()
-        context.restore()
-    }
+        context.shadowBlur = 10
+        context.shadowOffsetX = 5
+        context.shadowOffsetY = 5
+        context.shadowColor = "black"
 
-
-    // 三角形
-    //填充三角形（等边）
-    context.beginPath();
-    var height = 200*Math.sin(Math.PI/3);//计算等边三角形的高
-    context.moveTo(100,0); //从A（100,0）开始
-    context.lineTo(0,height);//从A(100,0)开始，画到B (0,173)结束
-    context.lineTo(200,height); //B(0,173)-C(200,173)
-    //ctx.fillStyle='#00ff00';//以纯色绿色填充
-    var grd = context.createLinearGradient(0,0,200,0);//使用渐变颜色填充,从(0,0)到(200,0) （左到右）
-    grd.addColorStop(0,"#4CE8B2"); //起始颜色
-    grd.addColorStop(1,"#EFD458"); //终点颜色
-//    context.fillStyle=grd; //以上面定义的渐变填充
-//    context.fill(); //闭合形状并且以填充方式绘制出来
-    context.lineTo(100,0)
-    context.stroke()
-
-    // 绘制文字
-    context.fillStyle = "red"
-
-    context.font = "normal normal lighter 60px '微软雅黑'"
-    context.textAlign = "left"
-
-    context.shadowBlur = 10
-    context.shadowOffsetX = 5
-    context.shadowOffsetY = 5
-    context.shadowColor = "black"
-
-    context.strokeText("You jump!I smale!",300,300)
-    context.fillText("You jump!I smale!",300,300)
-    context.fillText("jinshw",300,400)
-    context.strokeText("jinshw222",400,500)
-</script>
+        context.strokeText("You jump!I smale!", 300, 300)
+        context.fillText("You jump!I smale!", 300, 300)
+        context.fillText("jinshw", 300, 400)
+        context.strokeText("jinshw222", 400, 500)
+    </script>
 </body>
+
 </html>
