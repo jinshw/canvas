@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background-color: #191919;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" style="display: block;margin: 0 auto;border: 1px solid #191919;">
+    您的浏览器不支持canvas
+</canvas>
+<canvas id="watermark-canvas" style="display: none;"></canvas>
+<input type="range" id="scale-range" min="0.5" max="3.0" step="0.01" value="0.5"
+       style="display: block;margin: 20px auto;width: 800px;">
+<script>
+    var canvas = document.getElementById("canvas")
+    var context = canvas.getContext("2d")
+    var watermarkCanvas = document.getElementById("watermark-canvas")
+    var watermarkContext = watermarkCanvas.getContext("2d")
+    var slider = document.getElementById("scale-range")
+    var image = new Image()
+    window.onload = function () {
+        canvas.width = 1150
+        canvas.height = 768
+        var scale = slider.value
+
+        image.src = "1.jpg"
+        image.onload = function () {
+//            context.drawImage(image, 0, 0, canvas.width, canvas.height)
+            drawImageByScale(scale)
+            slider.onmousemove = function () {
+                var scale = slider.value
+                drawImageByScale(scale)
+            }
+        }
+
+        // setup watermark canvas
+        watermarkCanvas.width = 600
+        watermarkCanvas.height = 100
+        watermarkContext.font="bold 50px Arial"
+        watermarkContext.fillStyle = "rgba(255,255,255,0.5)"
+        watermarkContext.textBaseline = "middle"
+        watermarkContext.fillText("== jinshw.com ==",20,50)
+
+    }
+
+    function drawImageByScale(scale) {
+        var imageWidth = canvas.width * scale
+        var imageHeight = canvas.height * scale
+        var dx = canvas.width /2 - imageWidth/2
+        var dy = canvas.height/2 - imageHeight/2
+        context.clearRect(0,0,canvas.width,canvas.height)
+        context.drawImage(image,dx,dy,imageWidth,imageHeight)
+        context.drawImage(watermarkCanvas,canvas.width -watermarkCanvas.width,canvas.height-watermarkCanvas.height)
+    }
+
+
+</script>
+</body>
+</html>
