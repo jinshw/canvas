@@ -16,3 +16,6 @@
 
 * filter 
     blur-pc.html ---- 电脑端的滤镜
+
+* 运行gulp：
+    运行 gulp 访问 base/data.html
