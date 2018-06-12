@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas video</title>
+</head>
+
+<body>
+    <canvas id="canvas" style="display:block;margin: 10px auto;background-color: bisque;">该浏览器不支持canvas</canvas>
+    <div style="text-align:center">
+        <button onclick="playPause()">播放/暂停</button>
+        <button onclick="makeBig()">放大</button>
+        <button onclick="makeSmall()">缩小</button>
+        <button onclick="makeNormal()">普通</button>
+        <br>
+        <video id="video1" width="420">
+            <source src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </div>
+    <script>
+        var myVideo = document.getElementById("video1");
+        var canvas = document.getElementById("canvas")
+        var context = canvas.getContext('2d')
+        canvasWidth = 450
+        canvasHeight = 300
+        window.onload = function () {
+            canvas.width = canvasWidth
+            canvas.height = canvasHeight
+
+        }
+
+        function animate() {
+            if (!myVideo.ended) {
+                context.drawImage(myVideo, 0, 0, canvas.width, canvas.height)
+                window.requestAnimationFrame(animate)
+            }
+        }
+
+        //视频加载
+        function playPause() {
+            if (myVideo.paused) {
+                myVideo.play();
+                
+                window.requestAnimationFrame(animate)
+            } else {
+                myVideo.pause();
+            }
+
+        }
+
+        function makeBig() {
+            myVideo.width = 560;
+        }
+
+        function makeSmall() {
+            myVideo.width = 320;
+        }
+
+        function makeNormal() {
+            myVideo.width = 420;
+        } 
+    </script>
+</body>
+
+</html>

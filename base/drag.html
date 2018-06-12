@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas 拖拽图片</title>
+</head>
+
+<body ondragstart="return false">
+    <canvas id="canvas" style="background-color: bisque;">该浏览器不支持canvas</canvas>
+    <script>
+        canvasWidth = 800
+        canvasHeight = 800
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext('2d')
+        var image = new Image()
+        window.onload = function () {
+            canvas.width = canvasWidth
+            canvas.height = canvasHeight
+
+        }
+
+        canvas.addEventListener('dragenter', function (e) {
+            e.stopPropagation()
+            e.preventDefault()
+            e.dataTransfer.effectAllowed = 'copy'
+            console.log("dragenter..")
+        }, false)
+
+        canvas.addEventListener('dragover', function (e) {
+            e.stopPropagation()
+            e.preventDefault()
+            console.log("dragover..")
+        }, false)
+
+        window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+        canvas.addEventListener('drop', function (e) {
+            e.stopPropagation()
+            e.preventDefault()
+            console.log("drop...")
+            var file = e.dataTransfer.files[0]
+            window.requestFileSystem(window.TEMPORARY, 5 * 1024 * 1024, function (fs) {
+                fs.root.getFile(file.name, { create: true }, function (fileEntry) {
+                    fileEntry.createWriter(function (writer) {
+                        writer.write(file)
+                    })
+                    image.src = fileEntry.toURL()
+                    image.onload = function(){
+                        context.clearRect(0, 0, canvas.width, canvas.height)
+                        context.beginPath()
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+                        context.closePath()
+                    }
+                }, function (e) {
+                    console.log("111")
+                    console.log(e)
+                    alert(e.code)
+                });
+
+            }, function (e) {
+                console.log("222")
+                console.log(e)
+                alert(e.code)
+            })
+        }, false)
+
+    </script>
+</body>
+
+</html>
